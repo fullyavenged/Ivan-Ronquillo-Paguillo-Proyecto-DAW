@@ -1,6 +1,6 @@
 # Descripción de la Aplicación
 
-Mi idea es trabajar con la API de Spotify y para poder acceder a diferentes datos y estádisticas de lo que escucha el usuario para poder así crear un espacio personal donde el usuario pueda ver dichas estadísticas de forma cómoda y ordenable.
+Mi idea es trabajar con la API de Spotify para poder acceder a diferentes datos y estádisticas de lo que escucha el usuario para poder así crear un espacio personal donde el usuario pueda ver dichas estadísticas de forma cómoda y ordenable.
 # Requisitos de la Aplicación
 
 * Artistas más escuchados en distintos tramos (1 mes, 6 meses, un año…).
