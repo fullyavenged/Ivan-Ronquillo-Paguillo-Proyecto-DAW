@@ -1,17 +1,11 @@
 # Descripción de la Aplicación
+El usuario introduciría los su nombre en el juego (IGN), la región en la que juega y de que modo de juego quiere conseguir las estadisticas y mi aplicación mediante la API de Riot Games analizzaría todas las partidas jugadas que encajen con lo introducido por el usuario, trataría dichos datos para conseguir las estadísticas deseadas y se las mostraría al usuario. En este caso las datos que se obtendrían serían más casuales como podrían ser, partida más larga, más tiempo vivo, mayor número de muertes, etc
 
-Mi idea es trabajar con la API de Spotify para poder acceder a diferentes datos y estádisticas de lo que escucha el usuario para poder así crear un espacio personal donde el usuario pueda ver dichas estadísticas de forma cómoda y ordenable.
+Si el usuario estuviese registrado en el sistema tendría acceso a su perfil personal donde se mostrarían estadísticas mas "serias" como podrían ser porcentaje de victorias, personajes/roles más jugados, etc.
 # Requisitos de la Aplicación
 
-* Artistas más escuchados en distintos tramos (1 mes, 6 meses, un año…).
-
-* Canciones más escuchadas en distintos tramos (1 mes, 6 meses, un año…).
-* Lista de canciones ordenadas por el número de veces que ha sido escuchada ordenable por mes, día, año, etc. A esto se accedería desde el perfil del usuario
-* Lista de las 10 últimas canciones escuchadas y si se está escuchando alguna en ese momento mostrarla también.
-* El usuario podría poner en su perfil su canción favorita del momento y poder actualizarla o quitarla en cualquier momento
-* El usuario podrá modificar su username y su foto de perfil
-* Número de canciones diferentes escuchadas
-* Número de artistas diferentes escuchados
+* Login
+* Mostrar/ocultar contenido teniendo en cuenta el rol que tenga el usuario, "registered" o "unregistered"
 
 # Tecnologías para el proyecto
 Me gustaría usar Java como lenguaje y usar el framework Spring tanto para el backend como para el frontend.
