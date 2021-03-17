@@ -6,8 +6,11 @@ Si el usuario estuviese registrado en el sistema tendría acceso a su perfil per
 
 * Login
 * Mostrar/ocultar contenido teniendo en cuenta el rol que tenga el usuario, "registered" o "unregistered"
+* Que los usuarios registrados tengan su propio perfil que al hacer click en el te muestre su nombre, servidor, icono y las estadísticas mencionadas anteriormente.
+* Acceso a estadísticas basado en el servidor, nombre y modo de juego introducido por el usuario
 
 # Tecnologías para el proyecto
 Me gustaría usar Java como lenguaje y usar el framework Spring tanto para el backend como para el frontend.
 
-Para la comunicación con la API usaría un wrapper para Java específicamente creado para ello.
+OAuth para el tema de la seguridad
+
