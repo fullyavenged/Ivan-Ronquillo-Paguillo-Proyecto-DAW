@@ -1,13 +1,18 @@
 # Descripción de la Aplicación
-El usuario introduciría los su nombre en el juego (IGN), la región en la que juega y de que modo de juego quiere conseguir las estadísticas y mi aplicación mediante la API de Riot Games analizaría todas las partidas jugadas que encajen con lo introducido por el usuario, trataría dichos datos para conseguir las estadísticas deseadas y se las mostraría al usuario. En este caso las datos que se obtendrían serían más casuales como podrían ser, partida más larga, más tiempo vivo, mayor número de muertes, etc.
+Usuario no registrado: Podrá buscar un anime/manga y ver información del mismo (Número de episodios, autor, géneros, estudio, etc.)
 
-Si el usuario estuviese registrado en el sistema tendría acceso a su perfil personal donde se mostrarían estadísticas mas "serias" como podrían ser porcentaje de victorias, personajes/roles más jugados, etc.
+Usuario registrado: Podrá hacer lo mismo que el usuario sin registrar pero además tendrá su perfil donde podrá hacer su propia lista de mangas/anime. De las entradas añadidas a la lista se podrá modificar la nota, el estado (viendo, pendiente para ver, vista, etc.) yu borrar cualquiera de las entradas de la lista.
+
+Otra cosa que podrá hacer el usuario registrado es añadir un nuevo anime/manga a la base de datos si este no se encontrase al realizar la búsqueda. Una vez añadido estaría disponible para todos los usuarios tanto para ver sus datos como para añadirlo a sus listas.
+
+La base de datos sería realizada por mi para no depender de ninguna API.
 # Requisitos de la Aplicación
 
 * Login
-* Mostrar/ocultar contenido teniendo en cuenta el rol que tenga el usuario, "registered" o "unregistered"
-* Que los usuarios registrados tengan su propio perfil que al hacer click en el te muestre su nombre, servidor, icono y las estadísticas mencionadas anteriormente.
-* Acceso a estadísticas basado en el servidor, nombre y modo de juego introducido por el usuario
+* Distintas vistas según el rol del usuario, "registered"/"unregistered"
+* Que los usuarios puedan añadir nuevas entradas en la base de datos
+* Modificar la nota y el estado de las entradas en las listas
+* Eliminar entrdas de la lista
 
 # Tecnologías para el proyecto
 Me gustaría usar Java como lenguaje y usar el framework Spring tanto para el backend como para el frontend.
