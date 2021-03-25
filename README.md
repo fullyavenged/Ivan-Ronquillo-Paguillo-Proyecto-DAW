@@ -1,4 +1,6 @@
 # Descripción de la Aplicación
+Esta aplicación pretende crear un espacio donde los usuarios puedan buscar distintos animes/mangas y ver sus datos al mismo tiempo que poder crear sus propias listas de los mismos y poder lleavar un seguimiento de los que ha visto, quiere ver, etc.
+
 Usuario no registrado: Podrá buscar un anime/manga y ver información del mismo (Número de episodios, autor, géneros, estudio, etc.)
 
 Usuario registrado: Podrá hacer lo mismo que el usuario sin registrar pero además tendrá su perfil donde podrá hacer su propia lista de mangas/anime. De las entradas añadidas a la lista se podrá modificar la nota, el estado (viendo, pendiente para ver, vista, etc.) yu borrar cualquiera de las entradas de la lista.
@@ -15,7 +17,5 @@ La base de datos sería realizada por mi para no depender de ninguna API.
 * Eliminar entrdas de la lista
 
 # Tecnologías para el proyecto
-Me gustaría usar Java como lenguaje y usar el framework Spring tanto para el backend como para el frontend.
-
-OAuth para el tema de la seguridad
+Usaré Java como lenguaje de programación junto al framework Spring, con la integración de Hibernate y Thymeleaf para el frontend.
 
