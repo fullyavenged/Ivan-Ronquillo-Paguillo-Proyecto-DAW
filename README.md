@@ -1,5 +1,5 @@
 # Descripción de la Aplicación
-Esta aplicación pretende crear un espacio donde los usuarios puedan buscar distintos animes/mangas y ver sus datos al mismo tiempo que poder crear sus propias listas de los mismos y poder lleavar un seguimiento de los que ha visto, quiere ver, etc.
+Esta aplicación pretende crear un espacio donde los usuarios puedan buscar distintos animes/mangas y ver sus datos al mismo tiempo que poder crear sus propias listas de los mismos y poder llevar un seguimiento de los que ha visto, quiere ver, etc.
 
 Usuario no registrado: Podrá buscar un anime/manga y ver información del mismo (Número de episodios, autor, géneros, estudio, etc.)
 
