@@ -1,0 +1,6 @@
+beans\LoginBean.class
+dao\UserDAO.class
+util\HibernateUtil.class
+beans\UserProfileBean.class
+main\Main.class
+model\User.class

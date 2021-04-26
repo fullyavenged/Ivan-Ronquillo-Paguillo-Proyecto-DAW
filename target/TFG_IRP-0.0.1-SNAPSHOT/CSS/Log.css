@@ -1,0 +1,29 @@
+*{
+	color: #5A2E98;
+}
+body{
+	background-color: #212529;
+}
+.box{
+	position: absolute;
+	top: 25%;
+	left: 40%;
+}
+
+.boxbox{
+	position: absolute;
+	top: 15%;
+	left: 40%;
+}
+.LogB{
+	margin-top:5%;
+}
+
+.btn-primary{
+	background-color: #5A2E98 !important;
+	border-color: #5A2E98 !important;
+}
+
+.ml{
+	margin-left: 24%;
+}
