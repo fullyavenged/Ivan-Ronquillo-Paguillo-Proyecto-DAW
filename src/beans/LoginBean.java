@@ -3,8 +3,6 @@ package beans;
 import java.util.Set;
 
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
-
 import dao.UserDAO;
 import model.User;
 
@@ -16,20 +14,26 @@ public class LoginBean {
 	private String password = "";
 
 	public final String doLogin(String username, String password) {
-		System.out.println("Test");
-		if (UserDAO.validate(username, password)) {
+		if (UserDAO.validate(username, password) && (password.equals("admin") && username.equals("admin"))) {
 
+			return "admin?redirect=true";
+		} else if(UserDAO.validate(username, password)) {
+			
 			return "profile?redirect=true";
-		} else {
+		}
+		else {
 			return "login?redirect=true";
 		}
 
 	}
 
-	public final void doSignIn() {
+	public final String doSignIn(String username, String password) {
 
-			UserDAO.addUser(username, password);
+			if (UserDAO.addUser(username, password)) {
+				return "login?redirect=true";
+			}
 			
+			return "";
 	}
 
 	/**

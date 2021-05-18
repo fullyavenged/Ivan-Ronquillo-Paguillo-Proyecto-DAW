@@ -7,6 +7,8 @@ import org.hibernate.cfg.Configuration;
 import org.hibernate.context.internal.ThreadLocalSessionContext;
 import org.hibernate.service.ServiceRegistry;
 
+import model.Anime;
+import model.Manga;
 import model.User;
 
 
@@ -20,6 +22,8 @@ public class HibernateUtil {
         	configuration.configure("hibernate.cfg.xml");
         	
         	configuration.addAnnotatedClass(User.class);
+        	configuration.addAnnotatedClass(Anime.class);
+        	configuration.addAnnotatedClass(Manga.class);
         	
         	System.out.println("Hibernate Configuration loaded");
         	
