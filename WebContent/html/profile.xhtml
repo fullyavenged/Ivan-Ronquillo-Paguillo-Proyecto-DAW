@@ -33,11 +33,11 @@
 			</h:form>
         </li>
       </ul>
-      <div class = "log">
+      <h:panelGrid rendered="#{auth.user eq null}" class = "log">
       	 <h:form>
 <h:commandLink class="login" action = "#{profile.goHome()}" value="Log in"></h:commandLink>
 </h:form>
-      </div>
+      </h:panelGrid>
     </div>
   </div>
 </nav>
@@ -45,7 +45,7 @@
 	<div class = "row">
 		<aside class = "col-lg-4">
 			<div class ="row">
-				<h2>Perfil del usuario</h2>
+				<h2>Perfil del #{auth.user.username}</h2>
 				<hr></hr>
 			</div>	
 			<div class = "row">

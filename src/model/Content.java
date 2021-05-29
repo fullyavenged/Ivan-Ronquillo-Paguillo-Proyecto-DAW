@@ -9,6 +9,8 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -25,8 +27,6 @@ public class Content implements Serializable {
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private int idContent;
 	
-	/*Manga*/
-	
 	@Column(name="NAME")
 	private String name;
 	
@@ -35,8 +35,6 @@ public class Content implements Serializable {
 	
 	@Column(name="AUTHORS")
 	private String authors;
-	
-	/*Anime*/
 	
 	@Column(name="SYNOPSIS")
 	private String synopsis;
@@ -47,6 +45,12 @@ public class Content implements Serializable {
 	@Column(name="CONTENT_TYPE")
 	@Enumerated(EnumType.STRING)
 	private ContentType contentType;
+	
+	/*Test*/
+	
+//	@ManyToOne
+//    @JoinColumn(name="ID_CONTENT_LIST", nullable=false)
+//	private ContentList contentList;
 
 	public Content() {
 		super();

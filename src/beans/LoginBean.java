@@ -3,6 +3,8 @@ package beans;
 import java.util.Set;
 
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
+
 import dao.UserDAO;
 import model.User;
 
@@ -12,13 +14,18 @@ public class LoginBean {
 	private String damn = "Log In";
 	private String username = "";
 	private String password = "";
+	
+	 @ManagedProperty(value="#{auth}")
+	    private AuthBean authBean; // +setter
 
 	public final String doLogin(String username, String password) {
-		if (UserDAO.validate(username, password) && (password.equals("admin") && username.equals("admin"))) {
+		if (UserDAO.validate(username) && (password.equals("admin") && username.equals("admin"))) {
 
+			authBean.setUser(UserDAO.getUser(username));
 			return "admin?redirect=true";
-		} else if(UserDAO.validate(username, password)) {
+		} else if(UserDAO.tryLogIn(username, password)) {
 			
+			authBean.setUser(UserDAO.getUser(username));
 			return "profile?redirect=true";
 		}
 		else {
@@ -96,5 +103,19 @@ public class LoginBean {
 	 */
 	public final void setDamn(String damn) {
 		this.damn = damn;
+	}
+
+	/**
+	 * @return the authBean
+	 */
+	public final AuthBean getAuthBean() {
+		return authBean;
+	}
+
+	/**
+	 * @param authBean the authBean to set
+	 */
+	public final void setAuthBean(AuthBean authBean) {
+		this.authBean = authBean;
 	}
 }
