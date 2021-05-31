@@ -14,6 +14,7 @@
 		integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6"
 		crossorigin="anonymous"></link>
 	<link rel="stylesheet" href="../CSS/Profiles.css"></link>
+	<link rel="stylesheet" href="../CSS/Admin.css"></link>
 	<link rel="stylesheet" href="CSS/Log.css"></link>
 </h:head>
 <h:body>
@@ -39,39 +40,99 @@
 						<h:commandLink class="nav-link" aria-current="page"
 							action="#{profile.goHome()}" value="Manga"></h:commandLink>
 					</h:form></li>
+				<li class="nav-item"><h:form>
+						<h:commandLink class="nav-link" aria-current="page"
+							action="#{search.goSearch}" value="Search"></h:commandLink>
+					</h:form></li>
 			</ul>
 			<div class="log">
 				<h:form>
-					<h:commandLink class="login" action="#{profile.goHome()}"
+					<h:commandLink class="log" action="#{profile.goHome()}"
 						value="Log in"></h:commandLink>
 				</h:form>
 			</div>
 		</div>
 	</div>
 	</nav>
+	
+	
 	<div class="container-fluid">
+	
 		<h:form>
 			<div class="row">
+			<div class = "col-6">
 				<span>Add user to the data base</span>
-			</div>
+				<br></br>
+				
+				
+		
+		
+			
 			<button type="button" class="LogB btn btn-primary"
 				data-toggle="modal" data-target="#exampleModalCenter">Add
 				User</button>
+				<br></br>
 
-			<div class="row">
+			
 				<span>Delete user from the data base</span>
-			</div>
+				<br></br>
+			
 			<button type="button" class="LogB btn btn-primary"
 				data-toggle="modal" data-target="#delete">Delete User</button>
+				<br></br>
 
-			<div class="row">
+			
 				<span>Add content to the data base</span>
-			</div>
+				<br></br>
+			
 			<button type="button" class="LogB btn btn-primary"
 				data-toggle="modal" data-target="#anime">Add Content</button>
+				<br></br>
+				
+				<span>Delete content from the data base</span>
+				<br></br>
+			
+			<button type="button" class="LogB btn btn-primary"
+				data-toggle="modal" data-target="#deleteC">Delete Content</button>
+				<br></br>
 
+</div>
+<div id = "tables" class = "col-6">
 
-			<!-- Modal -->
+<h2 >Table of contents</h2>
+
+		<table >
+			<tr>
+				<th>Name</th>
+				<th>Chapters</th>
+				<th>Content Type</th>
+			</tr>
+			<p:repeat var="content" value="#{admin.content}">
+				<tr>
+					<td>#{content.name}</td>
+					<td>#{content.totalChapters}</td>
+					<td>#{content.contentType}</td>
+				</tr>
+			</p:repeat>
+			
+		</table>
+		
+		<h2 >Table of users</h2>
+		<table >
+			<tr>
+				<th>Name</th>
+				<th>ID</th>
+			</tr>
+			<p:repeat var="user" value="#{login.users}">
+				<tr>
+					<td>#{user.username}</td>
+					<td>#{user.idUser}</td>
+				</tr>
+			</p:repeat>
+			
+		</table></div>
+</div>
+			<!-- Modal Add User -->
 			<div class="modal fade" id="exampleModalCenter" tabindex="-1"
 				role="dialog" aria-labelledby="exampleModalCenterTitle"
 				aria-hidden="true">
@@ -107,7 +168,7 @@
 		</h:form>
 
 		<h:form>
-			<!-- Modal Anime -->
+			<!-- Modal Delete User -->
 			<div class="modal fade" id="delete" tabindex="-1" role="dialog"
 				aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
 				<div class="modal-dialog modal-dialog-centered" role="document">
@@ -149,7 +210,7 @@
  * Conent type -->
 
 		<h:form>
-			<!-- Modal Anime -->
+			<!-- Modal Add Content -->
 			<div class="modal fade" id="anime" tabindex="-1" role="dialog"
 				aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
 				<div class="modal-dialog modal-dialog-centered" role="document">
@@ -173,7 +234,7 @@
 								<p>Name</p>
 								<p:inputText value="#{admin.newContent.name}"></p:inputText>
 								<br></br>
-								<p:outputLabel value="#{admin.name}" id="a"></p:outputLabel>
+								<p:outputLabel value="#{admin.chapters}" id="a"></p:outputLabel>
 								<br></br>
 								<p:inputText value="#{admin.newContent.totalChapters}"></p:inputText>
 								<br></br>
@@ -196,24 +257,48 @@
 						</div>
 					</div>
 				</div>
+				
+			</div>
+		</h:form>
+		
+		<h:form>
+			<!-- Modal Delete Content -->
+			<div class="modal fade" id="deleteC" tabindex="-1" role="dialog"
+				aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+				<div class="modal-dialog modal-dialog-centered" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title" id="exampleModalLongTitle">Delete
+								Content</h5>
+							<button type="button" class="close" data-dismiss="modal"
+								aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+						<div class="modal-body">
+							<h:form class="box">
+								<h:selectOneMenu value="#{admin.newContent.contentType}">
+									<f:selectItem itemValue="" itemLabel="Choose One"></f:selectItem>
+									<f:selectItems value="#{admin.contentTypes}" var="type"
+										itemValue="#{type}" itemLabel="#{type}"></f:selectItems>
+								</h:selectOneMenu>
+								<p>Name</p>
+								<p:inputText value="#{admin.newContent.name}"></p:inputText>
+								<br></br>
+							</h:form>
+						</div>
+						<div class="modal-footer">
+
+							<h:commandButton action="#{admin.contentDelete()}"
+								class="btn btn-primary" value="Delete Content"></h:commandButton>
+
+						</div>
+					</div>
+				</div>
+				
 			</div>
 		</h:form>
 
-		<table>
-			<tr>
-				<th>Name</th>
-				<th>Synopsis</th>
-				<th>Content Type</th>
-			</tr>
-			<p:repeat var="content" value="#{admin.content}">
-				<tr>
-					<td>#{content.name}</td>
-					<td>#{content.synopsis}</td>
-					<td>#{content.contentType}</td>
-				</tr>
-			</p:repeat>
-			
-		</table>
 	</div>
 	<!-- Optional JavaScript -->
 	<!-- jQuery first, then Popper.js, then Bootstrap JS -->
@@ -228,6 +313,8 @@
 		src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
 		integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
 		crossorigin="anonymous"></script>
+		
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
 	<script>
 		$('#myModal').on('shown.bs.modal', function() {

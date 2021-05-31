@@ -13,7 +13,7 @@ body{
 
 .log{
 	width: 85px;
-	height: 45px;
+	height: 35px;
 	border-radius: 25px;
 	border: none;
 	background-color:  #5A2E98;
@@ -24,6 +24,7 @@ body{
 	text-align: center;
 	display: block;
 	margin-top: 9%;
+	
 	font-weight: bold;
 	font-size: 1.05rem;
 	text-decoration: none;

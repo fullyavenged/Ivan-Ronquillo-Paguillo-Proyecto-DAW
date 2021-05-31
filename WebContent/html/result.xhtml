@@ -14,7 +14,8 @@
 		integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6"
 		crossorigin="anonymous"></link>
 	<link rel="stylesheet" href="../CSS/Profiles.css"></link>
-	<link rel="stylesheet" href="/CSS/Profiles.css"></link>
+	<link rel="stylesheet" href="../CSS/Admin.css"></link>
+	<link rel="stylesheet" href="CSS/Log.css"></link>
 </h:head>
 <h:body>
 	<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -45,63 +46,62 @@
 							action="#{search.goSearch}" value="Search"></h:commandLink>
 					</h:form></li>
 			</ul>
-			<h:panelGrid rendered="#{auth.user eq null}" class="log">
+			<div class="log">
 				<h:form>
-					<h:commandLink class="login" action="#{profile.goHome()}"
+					<h:commandLink class="log" action="#{profile.goHome()}"
 						value="Log in"></h:commandLink>
 				</h:form>
-			</h:panelGrid>
+			</div>
 		</div>
 	</div>
 	</nav>
+	
+	
 	<div class="container-fluid">
-		<div class="row">
-			<aside class="col-lg-4">
-			<div class="row">
-				<h2>Perfil del #{auth.user.username}</h2>
-				<hr></hr>
-			</div>
-			<div class="row">
-				<img src="../Images/FinalEren.png" class="img-fluid col-lg-6"></img>
-			</div>
-			<div class = "log">
-			<h:form>
-				<h:commandLink class="login" action="#{profile.goList()}"
-					value="Log in"></h:commandLink>
-			</h:form> 
-			</div>
-			</aside>
+		<h:form>
+		<h2 >Result for #{result.searchString}</h2>
 
-			<article class="col-lg-8">
-			<div class="row">
-				<!-- 	Circulos para los estados	<div style = "border-radius: 100%; background-color: green; height: 10px !important; width: 10px !important; line-height: 10px !important; padding: 0px;"></div>
- -->
-				<div>
-					<h5>Anime Stats</h5>
-				</div>
-				<div class="row">
-					<ul class="col-lg-3">
-						<li class="watch">Watching <span>12</span>
-						</li>
-						<li class="completed">Completed <span>110</span>
-						</li>
-						<li class="dropped">Dropped <span>9</span>
-						</li>
-						<li class="pwatch">Plan To Watch <span>27</span>
-						</li>
-					</ul>
-					<ul class="col-lg-3 list2">
-						<li>Total Animes <span>158</span>
-						</li>
-						<li>Total Episodes <span>2024</span>
-						</li>
-					</ul>
-				</div>
-			</div>
-			</article>
-
-
-		</div>
+		<table >
+			<tr>
+				<th>Name</th>
+				<th>Chapters</th>
+				<th>Content Type</th>
+			</tr>
+			<p:repeat var="content" value="#{result.contentSet}">
+				<tr>
+					<td>#{content.name}</td>
+					<td>#{content.totalChapters}</td>
+					<td>#{content.contentType}</td>
+				</tr>
+			</p:repeat>
+			
+		</table>
+		
+		
+		
+		</h:form>
+		
 	</div>
+	<!-- Optional JavaScript -->
+	<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+		integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+		crossorigin="anonymous"></script>
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+		integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+		crossorigin="anonymous"></script>
+	<script
+		src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+		integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+		crossorigin="anonymous"></script>
+		
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+	<script>
+		$('#myModal').on('shown.bs.modal', function() {
+			$('#myInput').trigger('focus')
+		})
+	</script>
 </h:body>
 </html>

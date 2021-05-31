@@ -35,21 +35,68 @@ public class ContentDAO {
 
 	}
 
-	public static boolean validateAnime(String name) {
+	public static void deleteContent(Content content) {
 
-		sf = HibernateUtil.getSessionFactory();
+		if (content != null) {
 
-		session = sf.openSession();
-		session.beginTransaction();
+			String name = content.getName();
 
-		Anime ani = (Anime) session.createQuery("FROM Anime A WHERE A.name = :name").setParameter("name", name)
-				.uniqueResult();
+			ContentType contentType = content.getContentType();
 
-		session.getTransaction().commit();
-		session.close();
+			Content cont = ContentDAO.getUniqueContent(name, contentType);
 
-		return ani != null;
+			if (cont != null) {
+				
+				sf = HibernateUtil.getSessionFactory();
+
+				session = sf.openSession();
+				session.beginTransaction();
+
+				session.delete(cont);
+
+				session.getTransaction().commit();
+				session.close();
+			}
+
+		}
 	}
+
+//	public static void deleteContent(String name, ContentType contentType) {
+//
+//		if (name != null && contentType != null) {
+//
+//			Content cont = ContentDAO.getUniqueContent(name, contentType);
+//
+//			if (cont != null) {
+//				sf = HibernateUtil.getSessionFactory();
+//
+//				session = sf.openSession();
+//				session.beginTransaction();
+//
+//				session.delete(cont);
+//
+//				session.getTransaction().commit();
+//				session.close();
+//
+//			}
+//		}
+//	}
+
+//	public static boolean validateAnime(String name) {
+//
+//		sf = HibernateUtil.getSessionFactory();
+//
+//		session = sf.openSession();
+//		session.beginTransaction();
+//
+//		Anime ani = (Anime) session.createQuery("FROM Anime A WHERE A.name = :name").setParameter("name", name)
+//				.uniqueResult();
+//
+//		session.getTransaction().commit();
+//		session.close();
+//
+//		return ani != null;
+//	}
 
 	public static Set<Content> getContent() {
 
@@ -80,7 +127,8 @@ public class ContentDAO {
 		session = sf.openSession();
 		session.beginTransaction();
 
-		cont = (List<Content>) session.createQuery("FROM content C WHERE C.CONTENT_TYPE = :CT").setParameter("CT", contentType).list();
+		cont = (List<Content>) session.createQuery("FROM content C WHERE C.CONTENT_TYPE = :CT")
+				.setParameter("CT", contentType).list();
 
 		session.getTransaction().commit();
 		session.close();
@@ -89,5 +137,47 @@ public class ContentDAO {
 
 		return result;
 	}
+
+	public static Content getUniqueContent(String name, ContentType contentType) {
+
+		sf = HibernateUtil.getSessionFactory();
+
+		session = sf.openSession();
+		session.beginTransaction();
+
+		Content cont = null;
+
+		cont = (Content) session.createQuery("FROM Content C WHERE C.contentType = :CT AND C.name = :cname")
+				.setParameter("CT", contentType).setParameter("cname", name).uniqueResult();
+
+		session.getTransaction().commit();
+		session.close();
+
+		return cont;
+
+	}
+	
+	public static Set<Content> getContent(String name) {
+
+		List<Content> cont = null;
+		
+		sf = HibernateUtil.getSessionFactory();
+
+		session = sf.openSession();
+		session.beginTransaction();
+
+
+		cont = (List<Content>) session.createQuery("FROM Content C WHERE C.name = :cname")
+				.setParameter("cname", name).list();
+
+		session.getTransaction().commit();
+		session.close();
+		
+		Set<Content> result = new HashSet<Content>(cont);
+
+		return result;
+
+	}
+
 
 }

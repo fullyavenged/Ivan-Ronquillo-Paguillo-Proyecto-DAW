@@ -34,6 +34,12 @@ public class AdminBean {
 		init();
 	}
 	
+	public final void contentDelete() {
+		ContentDAO.deleteContent(newContent);
+		
+		init();
+	}
+	
 	public final Set<Content> getContent() {
 		return ContentDAO.getContent();
 	}
@@ -62,7 +68,7 @@ public class AdminBean {
 		this.newContent = newContent;
 	}
 
-	public final String getName() {
+	public final String getChapters() {
 		
 		return ContentType.ANIME.equals(newContent.getContentType())?"Episode":"Chapter";
 	}

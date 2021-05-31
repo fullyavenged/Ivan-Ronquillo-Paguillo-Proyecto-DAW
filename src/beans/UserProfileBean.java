@@ -13,4 +13,8 @@ public class UserProfileBean {
 	}
 
 
+	public final String goList() {
+		
+		return "list?faces-redirect=true";
+	}
 }

@@ -22,7 +22,7 @@ public class LoginBean {
 		if (UserDAO.validate(username) && (password.equals("admin") && username.equals("admin"))) {
 
 			authBean.setUser(UserDAO.getUser(username));
-			return "admin?redirect=true";
+			return "admin?faces-redirect=true";
 		} else if(UserDAO.tryLogIn(username, password)) {
 			
 			authBean.setUser(UserDAO.getUser(username));
