@@ -82,6 +82,24 @@ public class UserDAO {
 		}
 		
 	}
+	
+	public static User getUniqueUser(String username) {
+		
+		User user = null;
+		
+		sf = HibernateUtil.getSessionFactory();
+
+		session = sf.openSession();
+		session.beginTransaction();
+		
+		user = (User) session.createQuery("FROM User U WHERE U.username = :username").setParameter("username", username)
+				.uniqueResult();
+		
+		session.getTransaction().commit();
+		session.close();
+		
+		return user;
+	}
 
 	public static boolean tryLogIn(String username, String password) {
 

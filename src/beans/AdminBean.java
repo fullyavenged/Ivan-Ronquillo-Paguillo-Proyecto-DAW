@@ -4,6 +4,7 @@ import java.util.Set;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 
 import dao.ContentDAO;
 import dao.UserDAO;
@@ -14,6 +15,9 @@ import model.ContentType;
 public class AdminBean {
 
 	private Content newContent;
+	
+	@ManagedProperty(value="#{auth}")
+    private AuthBean authBean; // +setter
 
 	public final void userAdd(String username, String password) {
 		if (!UserDAO.validate(username)) {
@@ -38,6 +42,23 @@ public class AdminBean {
 		ContentDAO.deleteContent(newContent);
 		
 		init();
+	}
+	
+	public final void contentModify() {
+		ContentDAO.modifyContent(newContent);
+		
+		init();
+	}
+	
+	public final void contentAddList() {
+		ContentDAO.addContentList(newContent, authBean.user);
+		
+		init();
+	}
+	
+	public final String goAdmin() {
+		
+		return "admin?faces-redirect=true";
 	}
 	
 	public final Set<Content> getContent() {
@@ -80,6 +101,20 @@ public class AdminBean {
 	public final String getSource() {
 		
 		return ContentType.ANIME.equals(newContent.getContentType())?"Source":"Serialization";
+	}
+
+	/**
+	 * @return the authBean
+	 */
+	public final AuthBean getAuthBean() {
+		return authBean;
+	}
+
+	/**
+	 * @param authBean the authBean to set
+	 */
+	public final void setAuthBean(AuthBean authBean) {
+		this.authBean = authBean;
 	}
 
 }

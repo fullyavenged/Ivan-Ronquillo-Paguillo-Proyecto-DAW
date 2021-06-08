@@ -34,13 +34,12 @@
 			<ul class="navbar-nav me-auto mb-2 mb-lg-0">
 				<li class="nav-item"><h:form>
 						<h:commandLink class="nav-link" aria-current="page"
-							action="#{profile.goHome()}" value="Anime"></h:commandLink>
+							action="#{search.searchAnime()}" value="Anime"></h:commandLink>
 					</h:form></li>
 				<li class="nav-item"><h:form>
 						<h:commandLink class="nav-link" aria-current="page"
-							action="#{profile.goHome()}" value="Manga"></h:commandLink>
+							action="#{search.searchManga()}" value="Manga"></h:commandLink>
 					</h:form></li>
-					
 				<li class="nav-item"><h:form>
 						<h:commandLink class="nav-link" aria-current="page"
 							action="#{search.goSearch}" value="Search"></h:commandLink>
@@ -69,9 +68,13 @@
 			</tr>
 			<p:repeat var="content" value="#{result.contentSet}">
 				<tr>
-					<td>#{content.name}</td>
+					<td>
+					<h:commandLink class="nav-link" aria-current="page"
+							action="#{result.goDetailedC(content)}" value="#{content.name}"></h:commandLink>
+					</td>
+					
 					<td>#{content.totalChapters}</td>
-					<td>#{content.contentType}</td>
+					<td>#{content.contentType.toString()}</td>
 				</tr>
 			</p:repeat>
 			

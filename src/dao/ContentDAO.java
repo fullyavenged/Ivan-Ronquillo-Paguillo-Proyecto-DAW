@@ -11,6 +11,7 @@ import model.Anime;
 import model.Content;
 import model.ContentType;
 import model.User;
+import model.UserContent;
 import util.HibernateUtil;
 
 public class ContentDAO {
@@ -20,7 +21,7 @@ public class ContentDAO {
 
 	public static void addContent(Content content) {
 
-		if (content != null) {
+		if (content != null && ContentDAO.getUniqueContent(content.getName(), content.getContentType()) == null) {
 
 			sf = HibernateUtil.getSessionFactory();
 
@@ -46,7 +47,7 @@ public class ContentDAO {
 			Content cont = ContentDAO.getUniqueContent(name, contentType);
 
 			if (cont != null) {
-				
+
 				sf = HibernateUtil.getSessionFactory();
 
 				session = sf.openSession();
@@ -60,6 +61,66 @@ public class ContentDAO {
 
 		}
 	}
+
+	public static void modifyContent(Content content) {
+
+		if (content != null && ContentDAO.getUniqueContent(content.getName(), content.getContentType()) != null) {
+			
+			Content cont = ContentDAO.getUniqueContent(content.getName(), content.getContentType());
+			
+			if (content.getTotalChapters() != null) {
+				cont.setTotalChapters(content.getTotalChapters());
+			}
+			
+			if (!content.getAuthors().equals("")) {
+				
+				cont.setAuthors(content.getAuthors());
+			}
+			
+			if (!content.getSynopsis().equals("")) {
+				
+				cont.setSynopsis(content.getSynopsis());
+			}
+			
+			if (!content.getSource().equals("")) {
+				
+				cont.setSource(content.getSource());
+			}
+			
+			sf = HibernateUtil.getSessionFactory();
+
+			session = sf.openSession();
+			session.beginTransaction();
+			
+			session.update(cont);
+			
+			session.getTransaction().commit();
+			session.close();
+		}
+	}
+	
+	public static void addContentList(Content content, User user) {
+		
+		if (content != null && ContentDAO.getUniqueContent(content.getName(), content.getContentType()) != null) {
+			
+			Content cont = ContentDAO.getUniqueContent(content.getName(), content.getContentType());
+			
+			UserContent userc = new UserContent(cont, user);
+			
+			sf = HibernateUtil.getSessionFactory();
+
+			session = sf.openSession();
+			session.beginTransaction();
+			
+			session.update(user);
+			session.saveOrUpdate(userc);
+			
+			session.getTransaction().commit();
+			session.close();
+		}
+		
+	}
+
 
 //	public static void deleteContent(String name, ContentType contentType) {
 //
@@ -127,7 +188,7 @@ public class ContentDAO {
 		session = sf.openSession();
 		session.beginTransaction();
 
-		cont = (List<Content>) session.createQuery("FROM content C WHERE C.CONTENT_TYPE = :CT")
+		cont = (List<Content>) session.createQuery("FROM Content C WHERE C.contentType = :CT")
 				.setParameter("CT", contentType).list();
 
 		session.getTransaction().commit();
@@ -156,28 +217,28 @@ public class ContentDAO {
 		return cont;
 
 	}
-	
+
 	public static Set<Content> getContent(String name) {
 
 		List<Content> cont = null;
-		
+
 		sf = HibernateUtil.getSessionFactory();
 
 		session = sf.openSession();
 		session.beginTransaction();
 
-
-		cont = (List<Content>) session.createQuery("FROM Content C WHERE C.name = :cname")
-				.setParameter("cname", name).list();
+		name = "%"+name+"%";
+		
+		cont = (List<Content>) session.createQuery("FROM Content C WHERE C.name LIKE :cname").setParameter("cname", name)
+				.list();
 
 		session.getTransaction().commit();
 		session.close();
-		
+
 		Set<Content> result = new HashSet<Content>(cont);
 
 		return result;
 
 	}
-
 
 }

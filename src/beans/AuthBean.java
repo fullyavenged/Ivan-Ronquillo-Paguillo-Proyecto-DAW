@@ -1,15 +1,22 @@
 package beans;
 
+import java.io.Serializable;
+
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
 
 import org.springframework.context.annotation.Scope;
 
 import model.User;
 
 @ManagedBean(name = "auth")
-@Scope("session")
-public class AuthBean {
+@SessionScoped
+public class AuthBean implements Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	User user;
 	
 	public final boolean isAuth() {

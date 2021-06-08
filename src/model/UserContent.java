@@ -25,16 +25,29 @@ public class UserContent {
 	private Content content;
 	
 	@ManyToOne
-	@JoinColumn(name = "ID_USER")
+	@JoinColumn(name = "idUser")
 	private User user;
 	
-	@Column(name="SCORE")
+	@Column(name="SCORE", nullable = true)
 	private Double score;
 	
-	@Column(name="CHAPTERS")
+	@Column(name="CHAPTERS", nullable = true)
 	private Integer chapters;
 	
-	@Column(name="STATUS")
+	@Column(name="STATUS", nullable = true)
 	@Enumerated(EnumType.STRING)
 	private Status status;
+
+	public UserContent() {
+		super();
+	}
+
+	public UserContent(Content content, User user) {
+		super();
+		this.content = content;
+		this.user = user;
+	}
+	
+	
+	
 }

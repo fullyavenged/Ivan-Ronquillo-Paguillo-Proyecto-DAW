@@ -26,7 +26,7 @@ public class LoginBean {
 		} else if(UserDAO.tryLogIn(username, password)) {
 			
 			authBean.setUser(UserDAO.getUser(username));
-			return "profile?redirect=true";
+			return "profile?faces-redirect=true";
 		}
 		else {
 			return "login?redirect=true";
@@ -37,7 +37,7 @@ public class LoginBean {
 	public final String doSignIn(String username, String password) {
 
 			if (UserDAO.addUser(username, password)) {
-				return "login?redirect=true";
+				return "login?faces-redirect=true";
 			}
 			
 			return "";
