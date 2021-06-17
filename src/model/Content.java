@@ -46,6 +46,11 @@ public class Content implements Serializable {
 	@Enumerated(EnumType.STRING)
 	private ContentType contentType;
 	
+	@Column(name="IMAGE")
+	private String image = "https://i.imgur.com/YkOs2G6.jpeg";
+	
+	private boolean editable;
+	
 	/*Test*/
 	
 //	@ManyToOne
@@ -152,6 +157,34 @@ public class Content implements Serializable {
 	 */
 	public final void setContentType(ContentType contentType) {
 		this.contentType = contentType;
+	}
+
+	/**
+	 * @return the image
+	 */
+	public final String getImage() {
+		return image;
+	}
+
+	/**
+	 * @param image the image to set
+	 */
+	public final void setImage(String image) {
+		this.image = image;
+	}
+
+	/**
+	 * @return the editable
+	 */
+	public final boolean isEditable() {
+		return editable;
+	}
+
+	/**
+	 * @param editable the editable to set
+	 */
+	public final void setEditable(boolean editable) {
+		this.editable = editable;
 	}
 	
 	

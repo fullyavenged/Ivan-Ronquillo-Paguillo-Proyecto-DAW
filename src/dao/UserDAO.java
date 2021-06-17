@@ -15,7 +15,7 @@ public class UserDAO {
 	private static SessionFactory sf;
 	private static Session session;
 
-	public static Set<User> getAllUsers() {
+	public static List<User> getAllUsers() {
 
 		List<User> users = null;
 
@@ -29,15 +29,12 @@ public class UserDAO {
 		session.getTransaction().commit();
 		session.close();
 
-		Set<User> result = new HashSet<User>(users);
-
-		return result;
+		return users;
 
 	}
 
 	public static boolean addUser(String username, String password) {
-		
-	
+
 		User usr = null;
 
 		sf = HibernateUtil.getSessionFactory();
@@ -60,44 +57,43 @@ public class UserDAO {
 		}
 	}
 
-	public static void deleteUser(String username) {
+	public static void deleteUser(User user) {
 
-		if (username != null) {
-			
-			User use = getUser(username);
-			
-			if (use!=null) {
+		if (user != null) {
+
+			User use = getUser(user);
+
+			if (use != null) {
 				sf = HibernateUtil.getSessionFactory();
-				
+
 				session = sf.openSession();
 				session.beginTransaction();
-
 
 				session.delete(use);
 
 				session.getTransaction().commit();
 				session.close();
 			}
-			
+
 		}
-		
+
 	}
-	
+
 	public static User getUniqueUser(String username) {
-		
+
 		User user = null;
-		
+
 		sf = HibernateUtil.getSessionFactory();
 
 		session = sf.openSession();
 		session.beginTransaction();
-		
+
 		user = (User) session.createQuery("FROM User U WHERE U.username = :username").setParameter("username", username)
 				.uniqueResult();
-		
+
 		session.getTransaction().commit();
 		session.close();
-		
+
 		return user;
 	}
 
@@ -111,26 +107,26 @@ public class UserDAO {
 
 			User user = null;
 
-			user = (User) session.createQuery("FROM User U WHERE U.username = :username").setParameter("username", username)
-					.uniqueResult();
+			user = (User) session.createQuery("FROM User U WHERE U.username = :username")
+					.setParameter("username", username).uniqueResult();
 
 			session.getTransaction().commit();
 			session.close();
-			
+
 			return (user != null && user.getPassword().equals(password));
 		}
-		
+
 		return false;
 
 	}
 
 	public static boolean validate(String username) {
-		
+
 		return getUser(username) != null;
 	}
 
 	public static User getUser(String username) {
-		
+
 		sf = HibernateUtil.getSessionFactory();
 
 		session = sf.openSession();
@@ -145,5 +141,35 @@ public class UserDAO {
 		session.close();
 
 		return user;
+	}
+
+	public static User getUser(User user) {
+
+		sf = HibernateUtil.getSessionFactory();
+
+		session = sf.openSession();
+		session.beginTransaction();
+
+		String username = user.getUsername();
+
+		user = (User) session.createQuery("FROM User U WHERE U.username = :username").setParameter("username", username)
+				.uniqueResult();
+
+		session.getTransaction().commit();
+		session.close();
+
+		return user;
+	}
+	
+	public static void updateUser(User user) {
+		sf = HibernateUtil.getSessionFactory();
+
+		session = sf.openSession();
+		session.beginTransaction();
+
+		session.update(user);
+
+		session.getTransaction().commit();
+		session.close();
 	}
 }

@@ -1,3 +1,4 @@
+dao\UserContentDAO.class
 beans\AuthBean.class
 beans\AdminBean.class
 beans\SearchBean.class
@@ -12,6 +13,7 @@ util\HibernateUtil.class
 beans\UserProfileBean.class
 beans\DetailedContentBean.class
 dao\UserDAO.class
+beans\ListBean.class
 model\Anime.class
 model\ContentType.class
 model\User.class

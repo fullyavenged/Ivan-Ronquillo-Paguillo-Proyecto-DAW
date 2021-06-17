@@ -29,6 +29,9 @@ public class User implements Serializable {
 	@Column(name="password")
 	private String password;
 	
+	@Column(name="IMAGE")
+	private String image = "https://cdn.myanimelist.net/images/userimages/6796819.jpg?t=1623922800";
+	
 	public User(String username, String password) {
 		this.username = username;
 		this.password = password;
@@ -59,6 +62,18 @@ public class User implements Serializable {
 
 	public final void setPassword(String password) {
 		this.password = password;
+	}
+	/**
+	 * @return the image
+	 */
+	public final String getImage() {
+		return image;
+	}
+	/**
+	 * @param image the image to set
+	 */
+	public final void setImage(String image) {
+		this.image = image;
 	}
 
 }

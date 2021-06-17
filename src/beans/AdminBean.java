@@ -1,51 +1,83 @@
 package beans;
 
+import java.util.List;
 import java.util.Set;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
+import javax.faces.bean.SessionScoped;
+
+import org.primefaces.PrimeFaces;
 
 import dao.ContentDAO;
+import dao.UserContentDAO;
 import dao.UserDAO;
 import model.Content;
 import model.ContentType;
+import model.User;
+import model.UserContent;
 
 @ManagedBean(name = "admin")
+@SessionScoped
 public class AdminBean {
 
 	private Content newContent;
+	private Content modifyContent;
+
 	
 	@ManagedProperty(value="#{auth}")
     private AuthBean authBean; // +setter
+	
+	@ManagedProperty(value="#{result}")
+    private ResultBean resultBean; // +setter
+	
+	@ManagedProperty(value="#{login}")
+    private LoginBean loginBean; // +setter
 
 	public final void userAdd(String username, String password) {
 		if (!UserDAO.validate(username)) {
 			UserDAO.addUser(username, password);
+			
+			loginBean.setUsers(UserDAO.getAllUsers());
 		}
 
 	}
 
-	public final void userDelete(String username) {
+	public final void userDelete(User user) {
 
-		UserDAO.deleteUser(username);
+		UserContentDAO.deleteUserContentRelated(user);
+		
+		UserDAO.deleteUser(user);
+		
 
+		loginBean.setUsers(UserDAO.getAllUsers());
 	}
 	
-	public final void contentAdd() {
+	public final String contentAdd() {
 		ContentDAO.addContent(newContent);
 		
 		init();
+		
+		return "admin";
 	}
 	
-	public final void contentDelete() {
-		ContentDAO.deleteContent(newContent);
+	public final void contentDelete(Content content) {
+		
+		UserContent ucont = new UserContent();
+		
+		ucont.setContent(content);
+		
+		UserContentDAO.deleteUserContentRelated(content);
+		
+		ContentDAO.deleteContent(content);
+		
 		
 		init();
 	}
 	
 	public final void contentModify() {
-		ContentDAO.modifyContent(newContent);
+		ContentDAO.modifyContent(modifyContent);
 		
 		init();
 	}
@@ -61,13 +93,15 @@ public class AdminBean {
 		return "admin?faces-redirect=true";
 	}
 	
-	public final Set<Content> getContent() {
+	public final List<Content> getContent() {
 		return ContentDAO.getContent();
 	}
 
 	@PostConstruct
 	public final void init() {
 		newContent = new Content();
+		resultBean.setContentSet(ContentDAO.getContent());
+		modifyContent = new Content();
 	}
 
 	public ContentType[] getContentTypes() {
@@ -117,4 +151,37 @@ public class AdminBean {
 		this.authBean = authBean;
 	}
 
+	/**
+	 * @return the modifyContent
+	 */
+	public final Content getModifyContent() {
+		return modifyContent;
+	}
+
+	/**
+	 * @param modifyContent the modifyContent to set
+	 */
+	public final void setModifyContent(Content modifyContent) {
+		this.modifyContent = modifyContent;
+		
+	}
+
+	/**
+	 * @param resultBean the resultBean to set
+	 */
+	public final void setResultBean(ResultBean resultBean) {
+		this.resultBean = resultBean;
+	}
+
+	/**
+	 * @param loginBean the loginBean to set
+	 */
+	public final void setLoginBean(LoginBean loginBean) {
+		this.loginBean = loginBean;
+	}
+
+	public final void setContentToModify(Content modifyContent) {
+		this.modifyContent = modifyContent;
+		PrimeFaces.current().executeScript("$('#modifyC').modal('show');");
+	}
 }

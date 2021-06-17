@@ -1,8 +1,12 @@
 package dao;
 
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
+
+import javax.persistence.criteria.CriteriaBuilder;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -10,6 +14,7 @@ import org.hibernate.SessionFactory;
 import model.Anime;
 import model.Content;
 import model.ContentType;
+import model.Status;
 import model.User;
 import model.UserContent;
 import util.HibernateUtil;
@@ -64,35 +69,16 @@ public class ContentDAO {
 
 	public static void modifyContent(Content content) {
 
-		if (content != null && ContentDAO.getUniqueContent(content.getName(), content.getContentType()) != null) {
+		if (content != null ) {
 			
-			Content cont = ContentDAO.getUniqueContent(content.getName(), content.getContentType());
 			
-			if (content.getTotalChapters() != null) {
-				cont.setTotalChapters(content.getTotalChapters());
-			}
-			
-			if (!content.getAuthors().equals("")) {
-				
-				cont.setAuthors(content.getAuthors());
-			}
-			
-			if (!content.getSynopsis().equals("")) {
-				
-				cont.setSynopsis(content.getSynopsis());
-			}
-			
-			if (!content.getSource().equals("")) {
-				
-				cont.setSource(content.getSource());
-			}
 			
 			sf = HibernateUtil.getSessionFactory();
 
 			session = sf.openSession();
 			session.beginTransaction();
 			
-			session.update(cont);
+			session.update(content);
 			
 			session.getTransaction().commit();
 			session.close();
@@ -107,16 +93,22 @@ public class ContentDAO {
 			
 			UserContent userc = new UserContent(cont, user);
 			
-			sf = HibernateUtil.getSessionFactory();
+			userc.setStatus(Status.WATCHING);
+			
+			
+			if (UserContentDAO.getUniqueUserContent(userc) == null) {
+				sf = HibernateUtil.getSessionFactory();
 
-			session = sf.openSession();
-			session.beginTransaction();
+				session = sf.openSession();
+				session.beginTransaction();
+				
+				session.update(user);
+				session.saveOrUpdate(userc);
+				
+				session.getTransaction().commit();
+				session.close();
+			}
 			
-			session.update(user);
-			session.saveOrUpdate(userc);
-			
-			session.getTransaction().commit();
-			session.close();
 		}
 		
 	}
@@ -159,27 +151,27 @@ public class ContentDAO {
 //		return ani != null;
 //	}
 
-	public static Set<Content> getContent() {
+	public static List<Content> getContent() {
 
 		List<Content> cont = null;
 
+		
 		sf = HibernateUtil.getSessionFactory();
 
 		session = sf.openSession();
 		session.beginTransaction();
 
-		cont = (List<Content>) session.createQuery("FROM Content").list();
+		cont = (List<Content>) session.createQuery("FROM Content ORDER BY name").list();
 
 		session.getTransaction().commit();
 		session.close();
 
-		Set<Content> result = new HashSet<Content>(cont);
 
-		return result;
+		return cont;
 
 	}
 
-	public static Set<Content> getContent(ContentType contentType) {
+	public static List<Content> getContent(ContentType contentType) {
 
 		List<Content> cont = null;
 
@@ -196,7 +188,7 @@ public class ContentDAO {
 
 		Set<Content> result = new HashSet<Content>(cont);
 
-		return result;
+		return cont;
 	}
 
 	public static Content getUniqueContent(String name, ContentType contentType) {
@@ -218,7 +210,7 @@ public class ContentDAO {
 
 	}
 
-	public static Set<Content> getContent(String name) {
+	public static List<Content> getContent(String name) {
 
 		List<Content> cont = null;
 
@@ -235,9 +227,8 @@ public class ContentDAO {
 		session.getTransaction().commit();
 		session.close();
 
-		Set<Content> result = new HashSet<Content>(cont);
 
-		return result;
+		return cont;
 
 	}
 

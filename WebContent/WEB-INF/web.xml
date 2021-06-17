@@ -20,7 +20,7 @@
 
 	<!-- Welcome page -->
 	<welcome-file-list>
-		<welcome-file>html/login.xhtml</welcome-file>
+		<welcome-file>html/search.xhtml</welcome-file>
 	</welcome-file-list>
 	
 	<!-- JSF mapping -->

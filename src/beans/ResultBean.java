@@ -1,5 +1,7 @@
 package beans;
 
+import java.io.File;
+import java.util.List;
 import java.util.Set;
 
 import javax.faces.bean.ManagedBean;
@@ -18,12 +20,12 @@ public class ResultBean {
 	
 	String searchString;
 	
-	Set<Content> contentSet;
+	List<Content> contentSet;
 	
 	@ManagedProperty(value="#{detailedC}")
     private DetailedContentBean detailedBean; // +setter
 	
-	public final Set<Content> searchContent(String searchString){
+	public final List<Content> searchContent(String searchString){
 		contentSet = ContentDAO.getContent(searchString);
 		
 //ContentType xd = contentSet.iterator().next().getContentType();
@@ -56,14 +58,14 @@ public class ResultBean {
 	/**
 	 * @return the contentSet
 	 */
-	public final Set<Content> getContentSet() {
+	public final List<Content> getContentSet() {
 		return contentSet;
 	}
 
 	/**
 	 * @param contentSet the contentSet to set
 	 */
-	public final void setContentSet(Set<Content> contentSet) {
+	public final void setContentSet(List<Content> contentSet) {
 		this.contentSet = contentSet;
 	}
 

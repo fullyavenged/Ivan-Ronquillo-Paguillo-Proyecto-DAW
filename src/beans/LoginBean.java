@@ -1,29 +1,38 @@
 package beans;
 
+import java.util.List;
 import java.util.Set;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
+import javax.faces.bean.SessionScoped;
 
+import dao.ContentDAO;
 import dao.UserDAO;
 import model.User;
 
 @ManagedBean(name = "login")
+@SessionScoped
 public class LoginBean {
 
 	private String damn = "Log In";
 	private String username = "";
 	private String password = "";
+	private List<User> users = UserDAO.getAllUsers();
 	
 	 @ManagedProperty(value="#{auth}")
 	    private AuthBean authBean; // +setter
+	 
+	 @ManagedProperty(value="#{result}")
+	    private ResultBean resultBean; // +setter
 
 	public final String doLogin(String username, String password) {
 		if (UserDAO.validate(username) && (password.equals("admin") && username.equals("admin"))) {
 
 			authBean.setUser(UserDAO.getUser(username));
+			resultBean.setContentSet(ContentDAO.getContent());
 			return "admin?faces-redirect=true";
-		} else if(UserDAO.tryLogIn(username, password)) {
+		} else if(UserDAO.tryLogIn(username, password) && (username.compareToIgnoreCase("admin") != 0)) {
 			
 			authBean.setUser(UserDAO.getUser(username));
 			return "profile?faces-redirect=true";
@@ -42,6 +51,19 @@ public class LoginBean {
 			
 			return "";
 	}
+	
+	public final String doLogOut() {
+		
+		authBean.user = null;
+		
+		return "search?faces-redirect=true";
+	}
+	
+	public final String goLogIn() {
+		
+		return "login?faces-redirect=true";
+	}
+	
 
 	/**
 	 * @return the password
@@ -57,19 +79,19 @@ public class LoginBean {
 		this.password = password;
 	}
 
-	private Set<User> users = UserDAO.getAllUsers();
+	
 
 	/**
 	 * @return the users
 	 */
-	public final Set<User> getUsers() {
+	public final List<User> getUsers() {
 		return users;
 	}
 
 	/**
 	 * @param users the users to set
 	 */
-	public final void setUsers(Set<User> users) {
+	public final void setUsers(List<User> users) {
 		this.users = users;
 	}
 
@@ -117,5 +139,12 @@ public class LoginBean {
 	 */
 	public final void setAuthBean(AuthBean authBean) {
 		this.authBean = authBean;
+	}
+
+	/**
+	 * @param resultBean the resultBean to set
+	 */
+	public final void setResultBean(ResultBean resultBean) {
+		this.resultBean = resultBean;
 	}
 }
